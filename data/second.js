@@ -114,32 +114,24 @@ export var secondcanteenmeal=[{
 
 
 {
-    id:42,name:'蒜蓉西兰花',price:4,feature:'2',num:0
+    id:56,name:'圆白菜粉条',price:1.5,feature:'2',num:0
 },{
-    id:43,name:'清炒菜心',price:3.5,feature:'2',num:0
+    id:57,name:'油菜烧豆腐',price:2.5,feature:'2',num:0
 },{
-    id:44,name:'素炒黄心菜',price:3,feature:'2',num:0
+    id:58,name:'冬瓜木耳',price:2.5,feature:'2',num:0
 },{
-    id:45,name:'醋溜白菜',price:1.2,feature:'2',num:0
+    id:59,name:'木耳西葫芦',price:3,feature:'2',num:0
 },{
-    id:46,name:'醋溜豆芽',price:1.5,feature:'2',num:0
+    id:60,name:'香干油菜',price:4,feature:'2',num:0
 },{
-    id:47,name:'酸溜土豆丝',price:2.5,feature:'2',num:0
+    id:61,name:'玉米粒',price:5.5,feature:'2',num:0
 },{
-    id:48,name:'炝炒圆白菜',price:3,feature:'2',num:0
+    id:62,name:'烧茄子',price:6,feature:'2',num:0
 },{
-    id:49,name:'尖椒土豆丝',price:3.5,feature:'2',num:0
+    id:63,name:'鲜蘑菇肠丁',price:6,feature:'2',num:0
 },{
-    id:50,name:'西红柿鸡蛋',price:4.5,feature:'2',num:0
+    id:64,name:'鸡蛋羹',price:6,feature:'2',num:0
 },{
-    id:51,name:'木须肉',price:6,feature:'2',num:0
-},{
-    id:52,name:'尖椒豆皮',price:6,feature:'2',num:0
-},{
-    id:53,name:'香辣鱼豆腐',price:6,feature:'2',num:0
-},{
-    id:54,name:'鸡排',price:3,feature:'2',num:0
-},{
-    id:55,name:'鸡腿',price:4,feature:'2',num:0
+    id:65,name:'狮子头',price:2,feature:'2',num:0
 }
 ]

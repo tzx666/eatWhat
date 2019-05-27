@@ -8,6 +8,8 @@ import {secondcanteenmeal} from '../data/second'
 import {thirdcanteenmeal} from '../data/third'
 import {fourthcanteenmeal} from '../data/fourth'
 import {qzcanteenmeal} from '../data/qingzhen'
+//import{userchoose}from '../data/userchoose'
+export var userchoose=[]
 console.log(height+" "+width)
 export class HomeScreen extends Component{
     static navigationOptions = {
@@ -16,39 +18,50 @@ export class HomeScreen extends Component{
     };
     constructor(props){
         super(props)
-        this.state={data:firstcanteenmeal,isVisible:false,choose:[],total:0,userchoose:[]}
+        this.state={data:firstcanteenmeal,isVisible:false,choose:[],total:0,color:'white',color1:'white',color2:'white',color3:'white',color4:'white'}
         console.log(this.state.data)
     } 
+    
+getmyDate() {
+    var date = new Date();
+
+    var year = date.getFullYear().toString();
+    var month = (date.getMonth()+1).toString();
+    var day = date.getDate().toString();
+    var hour =  date.getHours().toString();
+    var minute = date.getMinutes().toString();
+
+    return year+'年'+month+'月'+day+'日'+' '+hour+':'+minute;
+};
     keyExtractor = (item, index) => index.toString()
     render(){
         return(
-            <View >
+            <View>
             <View style={style.toptext}>
-            <Text  onPress={()=>this.props.navigation.navigate('Details')}>不知道吃什么？</Text>
+            <Text style={{fontSize:40}} onPress={()=>this.props.navigation.navigate('Details')}>不知道吃什么？</Text>
             </View>
             <View style={style.bottomborder}></View>
          <View style={{flexDirection:'row',height:1000*unitWidth}}>
              <View style={{width:200*unitWidth,marginBottom:100}}>
              <View style={{marginBottom:140}}>
-             <TouchableHighlight style={style.button} onPress={()=>this.setState({data:firstcanteenmeal})}>
+             <TouchableHighlight style={[style.button01,{backgroundColor:this.state.color}]} onPress={()=>this.setState({data:firstcanteenmeal,color:'#FF7F00',color1:'white',color2:'white',color3:'white',color4:'white'})}>
                 <Text>1食堂</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={style.button}onPress={()=>this.setState({data:secondcanteenmeal})}>
+                <TouchableHighlight style={[style.button02,{backgroundColor:this.state.color1}]}onPress={()=>this.setState({data:secondcanteenmeal,color:'white',color1:'#FF7F00',color2:'white',color3:'white',color4:'white'})}>
                 <Text>2食堂</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={style.button}onPress={()=>this.setState({data:thirdcanteenmeal})}>
+                <TouchableHighlight style={[style.button03,{backgroundColor:this.state.color2}]}onPress={()=>this.setState({data:thirdcanteenmeal,color:'white',color1:'white',color2:'#FF7F00',color3:'white',color4:'white'})}>
                 <Text>3食堂</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={style.button}onPress={()=>this.setState({data:fourthcanteenmeal})}>
+                <TouchableHighlight style={[style.button04,{backgroundColor:this.state.color3}]}onPress={()=>this.setState({data:fourthcanteenmeal,color:'white',color1:'white',color2:'white',color3:'#FF7F00',color4:'white'})}>
                 <Text>4食堂</Text>
                 </TouchableHighlight>
-                <TouchableHighlight style={style.button}onPress={()=>this.setState({data:qzcanteenmeal})}>
+                <TouchableHighlight style={[style.button05,{backgroundColor:this.state.color4}]}onPress={()=>this.setState({data:qzcanteenmeal,color:'white',color1:'white',color2:'white',color3:'white',color4:'#FF7F00'})}>
                 <Text>清真食堂</Text>
                 </TouchableHighlight>
                 </View>
                 <View style={style.circle}>
                 <TouchableHighlight onPress={()=>{
-                    console.log(this.state.data.length)
                     for(let i=0;i<this.state.data.length;i++){
                         if(this.state.data[i].num!=0){
                             this.state.choose.push(this.state.data[i])
@@ -65,6 +78,7 @@ export class HomeScreen extends Component{
             renderItem={({item}) =>
             <ListItem         
             title={item.name}
+            bottomDivider true
             subtitle={
                 <View style={{flexDirection:'row',justifyContent: 'space-around',}}>
                 <Text >{"价格："+item.price}</Text>
@@ -91,7 +105,6 @@ export class HomeScreen extends Component{
                 </View>
                 </View>
               }
-              bottomDivider true
             />}
             />
             <Overlay isVisible={this.state.isVisible}>
@@ -113,9 +126,14 @@ export class HomeScreen extends Component{
         for(let i=0;i<this.state.data.length;i++){
             this.state.data[i].num=0;
         }
-        this.state.userchoose.push(this.state.choose)
+        this.state.choose['time']=this.getmyDate()
+        this.state.choose['total']=this.state.total
+        this.state.total=0
+        console.log(this.state.choose)
+        userchoose.push(this.state.choose)
         this.state.choose=[]
-        this.setState({isVisible:false,choose:this.state.choose,userchoose:this.state.userchoose,data:this.state.data})}
+        
+        this.setState({isVisible:false,choose:this.state.choose,data:this.state.data,total:this.state.total})}
         }>
         <View style={style.textinbutton}>
          <Text style={style.text1}>确定</Text>
@@ -170,7 +188,7 @@ const style=StyleSheet.create({
     borderRadius:90,
     paddingBottom:2    
     },
-    button:{
+    button01:{
         borderColor:'black',
         borderStyle:'solid',
         borderWidth:1*unitWidth,
@@ -181,6 +199,59 @@ const style=StyleSheet.create({
         textAlign:'center',
         fontSize:20, alignItems:'center',
         justifyContent:'center',
+        backgroundColor:'#FF7F00'
+        //paddingBottom:20
+    }, button02:{
+        borderColor:'black',
+        borderStyle:'solid',
+        borderWidth:1*unitWidth,
+        borderRadius:15,
+        width:200*unitWidth,
+        height:80*unitWidth,
+        marginBottom:5*unitWidth,
+        textAlign:'center',
+        fontSize:20, alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#FF7F00'
+        //paddingBottom:20
+    }, button03:{
+        borderColor:'black',
+        borderStyle:'solid',
+        borderWidth:1*unitWidth,
+        borderRadius:15,
+        width:200*unitWidth,
+        height:80*unitWidth,
+        marginBottom:5*unitWidth,
+        textAlign:'center',
+        fontSize:20, alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#FF7F00'
+        //paddingBottom:20
+    }, button04:{
+        borderColor:'black',
+        borderStyle:'solid',
+        borderWidth:1*unitWidth,
+        borderRadius:15,
+        width:200*unitWidth,
+        height:80*unitWidth,
+        marginBottom:5*unitWidth,
+        textAlign:'center',
+        fontSize:20, alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#FF7F00'
+        //paddingBottom:20
+    }, button05:{
+        borderColor:'black',
+        borderStyle:'solid',
+        borderWidth:1*unitWidth,
+        borderRadius:15,
+        width:200*unitWidth,
+        height:80*unitWidth,
+        marginBottom:5*unitWidth,
+        textAlign:'center',
+        fontSize:20, alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'#FF7F00'
         //paddingBottom:20
     },
     button1:{
