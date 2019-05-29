@@ -5,14 +5,25 @@ import { HomeScreen} from './Pages/HomeScreen'
 import {DetailsScreen} from './Pages/DetailsScreen'
 import {UserScreen} from './Pages/Users/UserScreen'
 import{HistoryScreen}from'./Pages/Users/HistoryScreen'
-import {MyInformationScreen}from './Pages/Users/MyInformationScreen'
+import {MyInformationScreen}from './Pages/Users/Information/MyInformationScreen'
+import {requestpreScreen}from './Pages/Users/Information/requestpreScreen'
+import {scoreformealScreen}from './Pages/Users/Information/scoreformealScreen'
+import {changemealsScreen}from './Pages/Users/Information/changemealsScreen'
 import{SettingScreen}from'./Pages/Users/SettingScreen'
 import{AboutScreen}from './Pages/Users/AboutScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+const Information=createStackNavigator({
+ Home2:MyInformationScreen,
+  requestpre:requestpreScreen,
+  scoreformeal:scoreformealScreen,
+  changemeals:changemealsScreen,
+},{
+  initialRouteName: "Home2"
+})
 const Users=createStackNavigator({
     Home:UserScreen,
     History:HistoryScreen,
-    MyInformation:MyInformationScreen,
+    MyInformation:Information,
     Setting:SettingScreen,
     About:AboutScreen
 });

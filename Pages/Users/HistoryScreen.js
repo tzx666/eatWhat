@@ -9,13 +9,14 @@ export class HistoryScreen extends Component{
         return(      
             <ScrollView>
                 <View style={style.toptext}>
-                <Text style={{fontSize:30}}>历史选餐</Text>
+                <Text style={{fontSize:20}}>历史选餐</Text>
+                <Text style={{fontSize:15}}>该用户共计选餐：{userchoose.length}份</Text>
                 </View>
-                <Text>该用户共计选餐：{userchoose.length}份</Text>
+                
                 {userchoose.map((item,i)=>(
                     <ScrollView>
-                    <Text>时间:{item.time}</Text>
-                    <Text>消费：{item.total}</Text>
+                    <Text style={{fontSize:18,marginBottom:2*unitWidth}}>时间:{item.time}</Text>
+                    <Text style={{fontSize:15,marginBottom:2*unitWidth}}>消费：{item.total}元</Text>
                     <ScrollView>
                     {
                         item.map((item1,i)=>(
@@ -35,10 +36,13 @@ export class HistoryScreen extends Component{
 const style=StyleSheet.create({
     toptext:{
         width:unitWidth*750,
-        height:unitWidth*375,
+        height:unitWidth*100,
         textAlign:'center',
         backgroundColor:'white',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        borderBottomWidth:1*unitWidth,
+        marginBottom:2*unitWidth,
+        borderBottomColor:'gray',
     }
 })
