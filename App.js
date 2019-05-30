@@ -12,20 +12,16 @@ import {changemealsScreen}from './Pages/Users/Information/changemealsScreen'
 import{SettingScreen}from'./Pages/Users/SettingScreen'
 import{AboutScreen}from './Pages/Users/AboutScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const Information=createStackNavigator({
- Home2:MyInformationScreen,
-  requestpre:requestpreScreen,
-  scoreformeal:scoreformealScreen,
-  changemeals:changemealsScreen,
-},{
-  initialRouteName: "Home2"
-})
 const Users=createStackNavigator({
     Home:UserScreen,
     History:HistoryScreen,
-    MyInformation:Information,
+    MyInformation:MyInformationScreen,
     Setting:SettingScreen,
-    About:AboutScreen
+    About:AboutScreen,requestpre:requestpreScreen,
+    scoreformeal:scoreformealScreen,
+    changemeals:changemealsScreen,
+},{
+  initialRouteName: "Home"
 });
 const AppNavigator = createBottomTabNavigator(
   {

@@ -5,6 +5,10 @@ import {ListItem, Icon,Overlay}from 'react-native-elements'
 import {unitWidth, width, height}from'../Adapt'
 console.log(userchoose)
 export class HistoryScreen extends Component{
+    static navigationOptions = {
+        //   tabBarVisible: false, // 隐藏底部导航栏
+           header:null,  //隐藏顶部导航栏
+         };
     render(){
         return(      
             <ScrollView>

@@ -8,8 +8,9 @@ import { Icon } from 'react-native-elements'
 export var userinfo={name:'',password:'',email:''};
 export class UserScreen extends Component{
     static navigationOptions = {
-        tabBarLabel: '我的',
+      //  tabBarLabel: '我的',
         //drawerLabel:'页面1'
+        header:null
     };
     constructor(props){
         super(props)
