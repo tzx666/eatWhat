@@ -18,7 +18,8 @@ export class HistoryScreen extends Component{
                 </View>
                 
                 {userchoose.map((item,i)=>(
-                    <ScrollView>
+                    <ScrollView style={{width:unitWidth*750,borderWidth:1*unitWidth,borderColor:'gray' }}>
+                    
                     <Text style={{fontSize:18,marginBottom:2*unitWidth}}>时间:{item.time}</Text>
                     <Text style={{fontSize:15,marginBottom:2*unitWidth}}>消费：{item.total}元</Text>
                     <ScrollView>
@@ -46,7 +47,7 @@ const style=StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         borderBottomWidth:1*unitWidth,
-        marginBottom:2*unitWidth,
+        marginBottom:5*unitWidth,
         borderBottomColor:'gray',
     }
 })
