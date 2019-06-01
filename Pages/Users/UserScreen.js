@@ -74,7 +74,8 @@ export class UserScreen extends Component{
                 body: 'name='+this.state.name+'&password='+this.state.password+'&email='+this.state.email
               })
               .then(res=>res.text()) 
-              .then((data)=> { 
+              .then((data)=> {
+                console.log(data) 
                 if(data==1){
                   this.setState({isVisible:false,usename:this.state.name,password:this.state.password,email:this.state.password,permission:1})
                   Alert.alert("登陆成功")

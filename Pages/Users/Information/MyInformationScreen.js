@@ -16,7 +16,19 @@ export class MyInformationScreen extends Component{
                 <Button buttonStyle={{height:150,width:300,marginBottom:10,marginTop:10}}title='申请管理员'  type='outline'onPress={()=>this.props.navigation.navigate('requestpre')}/>
                 </View>
                 <View >
-                <Button buttonStyle={{height:150,width:300,marginBottom:10,}}title='为菜品打分' type='outline' onPress={()=>this.props.navigation.navigate('scoreformeal')}/>
+                <Button buttonStyle={{height:150,width:300,marginBottom:10,}}title='为菜品打分' type='outline' onPress={()=>{ 
+                        fetch('http://192.168.43.40/app-contact/getdatebase.php')
+                    .then(res=>res.json()) 
+                    .then(data=> { 
+                      console.log(data);   
+                      datas=data
+                    }) 
+                    .catch(function (error) { 
+                      console.log('Request failed', error); 
+                    });  
+                    console.log(datas)
+                   if(datas!=[])
+                this.props.navigation.navigate('scoreformeal')}}/>
                 </View>
                 <View >
                 <Button buttonStyle={{height:150,width:300,marginBottom:10}}title='修改菜品' type='outline' onPress={()=>
@@ -29,6 +41,8 @@ export class MyInformationScreen extends Component{
                     .catch(function (error) { 
                       console.log('Request failed', error); 
                     }); 
+                        console.log(datas)
+                        if(datas!=[])
                         this.props.navigation.navigate('changemeals')}}/>
                 </View>
             </View>
