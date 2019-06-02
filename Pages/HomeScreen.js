@@ -18,10 +18,13 @@ export class HomeScreen extends Component{
     };
     constructor(props){
         super(props)
-        this.state={data:firstcanteenmeal,isVisible:false,choose:[],total:0,color:'white',color1:'white',color2:'white',color3:'white',color4:'white'}
+        this.state={data:firstcanteenmeal,isVisible:false,choose:[],
+            total:0,color:'white',color1:'white',color2:'white',color3:'white',color4:'white'}
         console.log(this.state.data)
     } 
-    
+    componentDidMount(){
+
+    }
 getmyDate() {
     var date = new Date();
 
@@ -33,6 +36,20 @@ getmyDate() {
 
     return year+'年'+month+'月'+day+'日'+' '+hour+':'+minute;
 };
+addcount=({item})=>{
+    console.log(item)
+    this.state.data[item.id-1].num++;
+    this.state.total=this.state.total+item.price;
+    console.log(this.state.total)
+    this.setState({data:this.state.data,total:this.state.total});
+}
+decendcount=({item})=>{
+    console.log(item)
+    this.state.data[item.id-1].num--;console.log(this.state.data[item.id])
+    this.state.total=this.state.total-item.price
+     console.log(this.state.total)
+     this.setState({data:this.state.data,total:this.state.total})
+}
     keyExtractor = (item, index) => index.toString()
     render(){
         return(
@@ -83,11 +100,12 @@ getmyDate() {
                 <View style={{flexDirection:'row',justifyContent: 'space-around',}}>
                 <Text >{"价格："+item.price}</Text>
                 <View  style={{flexDirection:'row',justifyContent: 'center',}}>
-                <TouchableHighlight style={style.button1}onPress={()=>{    
+                <TouchableHighlight style={style.button1}onPress={this.addcount
+                    /* ()=>{    
                     this.state.data[item.id-1].num++;
                     this.state.total=this.state.total+item.price;
                     console.log(this.state.total)
-                    this.setState({data:this.state.data,total:this.state.total});}}>
+                    this.setState({data:this.state.data,total:this.state.total});}*/}>
                 <Icon name="add" />
                 </TouchableHighlight>
                 <View style={{width:50*unitWidth,height:50*unitWidth,borderWidth:1*unitWidth,textAlign:'center',
@@ -95,11 +113,12 @@ getmyDate() {
         justifyContent:'center',}}>
                   <Text >{item.num}</Text>
                   </View>
-                  <TouchableHighlight style={style.button1}onPress={()=>{
+                  <TouchableHighlight style={style.button1}onPress={this.decendcount
+                      /* ()=>{
                    this.state.data[item.id-1].num--;console.log(this.state.data[item.id])
                    this.state.total=this.state.total-item.price
                     console.log(this.state.total)
-                    this.setState({data:this.state.data,total:this.state.total})}}>
+                    this.setState({data:this.state.data,total:this.state.total})}*/}>
                 <Icon name="remove" />
                 </TouchableHighlight>
                 </View>

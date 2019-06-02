@@ -11,6 +11,8 @@ import {scoreformealScreen}from './Pages/Users/Information/scoreformealScreen'
 import {changemealsScreen}from './Pages/Users/Information/changemealsScreen'
 import{SettingScreen}from'./Pages/Users/SettingScreen'
 import{AboutScreen}from './Pages/Users/AboutScreen'
+import{changeScreen}from'./Pages/Users/Information/changeScreen'
+import{dealScreen}from'./Pages/Users/Information/dealScreen'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const Users=createStackNavigator({
     Home:UserScreen,
@@ -20,6 +22,8 @@ const Users=createStackNavigator({
     About:AboutScreen,requestpre:requestpreScreen,
     scoreformeal:scoreformealScreen,
     changemeals:changemealsScreen,
+    deal1:changeScreen,
+    deal2:dealScreen,
 },{
   initialRouteName: "Home"
 });
