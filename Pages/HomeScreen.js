@@ -1,13 +1,8 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Dimensions,ScrollView,FlatList,TouchableHighlight} from 'react-native'
+import {Platform, StyleSheet, Text, View,Button,Dimensions,ScrollView,FlatList,TouchableHighlight,Picker} from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {ListItem, Icon,Overlay}from 'react-native-elements'
 import {unitWidth, width, height, unitHeight}from'../Pages/Adapt'
-import {firstcanteenmeal} from '../data/first'
-import {secondcanteenmeal} from '../data/second'
-import {thirdcanteenmeal} from '../data/third'
-import {fourthcanteenmeal} from '../data/fourth'
-import {qzcanteenmeal} from '../data/qingzhen'
 //import{userchoose}from '../data/userchoose'
 export var userchoose=[]
 console.log(height+" "+width)
@@ -18,12 +13,34 @@ export class HomeScreen extends Component{
     };
     constructor(props){
         super(props)
-        this.state={data:firstcanteenmeal,isVisible:false,choose:[],
-            total:0,color:'white',color1:'white',color2:'white',color3:'white',color4:'white'}
-        console.log(this.state.data)
+        this.state={isVisible:false,choose:[],
+            total:0,initmeals:[],school:[],canteens:[],meals:[],selecteduniversity:'buct',selectedcanteen:'firstmeal'}
     } 
     componentDidMount(){
-
+        fetch('http://192.168.43.40/app-contact/getdatebase.php')
+                    .then(res=>res.json()) 
+                    .then(data=> { 
+                      console.log(data);   
+                      this.setState({school:data})
+                      fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+                        method: 'post', 
+                        headers: { 
+                          "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+                        }, 
+                        body: 'dbname=buct&dbtable=firstmeal'
+                      })
+                      .then(res=>res.json()) 
+                      .then(data=> {   
+                       this.setState({meals:data})
+                         console.log(this.state.meals)
+                      }) 
+                      .catch(function (error) { 
+                        console.log('Request failed', error); 
+                      }); 
+                    }) 
+                    .catch(function (error) { 
+                      console.log('Request failed', error); 
+                    }); 
     }
 getmyDate() {
     var date = new Date();
@@ -36,52 +53,88 @@ getmyDate() {
 
     return year+'年'+month+'月'+day+'日'+' '+hour+':'+minute;
 };
-addcount=({item})=>{
-    console.log(item)
-    this.state.data[item.id-1].num++;
-    this.state.total=this.state.total+item.price;
-    console.log(this.state.total)
-    this.setState({data:this.state.data,total:this.state.total});
-}
-decendcount=({item})=>{
-    console.log(item)
-    this.state.data[item.id-1].num--;console.log(this.state.data[item.id])
-    this.state.total=this.state.total-item.price
-     console.log(this.state.total)
-     this.setState({data:this.state.data,total:this.state.total})
-}
     keyExtractor = (item, index) => index.toString()
     render(){
         return(
             <View>
-            <View style={style.toptext}>
-            <Text style={{fontSize:40}} onPress={()=>this.props.navigation.navigate('Details')}>不知道吃什么？</Text>
+            <View >
+            <Picker
+  selectedValue={this.state.selecteduniversity}
+  style={{ height: 50, width: 360 }}
+  onValueChange={(itemValue, itemIndex) => {
+     this.setState({selecteduniversity:itemValue})
+    console.log(itemValue)
+   
+      fetch('http://192.168.43.40/app-contact/showdatabase.php',{ 
+      method: 'post', 
+      headers: { 
+        "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+      }, 
+      body: 'dbname='+itemValue
+    })
+    .then(res=>res.json()) 
+    .then(data=> {   
+      this.state.canteens=[]
+      for(let i=1;i<=data[0];i++){
+        this.state.canteens.push(data[i])
+      } 
+      this.setState({canteens:this.state.canteens})
+      console.log(this.state.canteens)
+    }) 
+    .catch(function (error) { 
+      console.log('Request failed', error); 
+    }); 
+    }}>
+      {
+          this.state.school.map((item1,i)=>(
+               <Picker.Item label={item1.name} value={item1.engname} />
+          ))
+      }
+              </Picker>
+              <Picker
+  selectedValue={this.state.selectedcanteen}
+  style={{ height: 50, width: 360 }}
+  onValueChange={(itemValue, itemIndex) => {
+    console.log(this.state.selecteduniversity+' '+itemValue)
+    this.setState({selectedcanteen:itemValue})
+    fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+      method: 'post', 
+      headers: { 
+        "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+      }, 
+      body: 'dbname='+this.state.selecteduniversity.toString()+'&dbtable='+itemValue
+    })
+    .then(res=>res.json()) 
+    .then(data=> {
+        this.state.meals=[]
+        for(i in data){
+            this.state.meals.push(data[i])
+            this.state.meals[i]['num']=0
+            this.state.meals[i]['id']=parseInt(i);
+            this.state.meals[i]['price']=parseInt(this.state.meals[i]['price']);
+        }
+      this.setState({meals:this.state.meals})
+      console.log(this.state.meals)
+    }) 
+    .catch(function (error) { 
+      console.log('Request failed', error); 
+    }); 
+    }}>
+      {
+          this.state.canteens.map((item1,i)=>(
+               <Picker.Item label={item1} value={item1} />
+          ))
+      }
+              </Picker>
             </View>
             <View style={style.bottomborder}></View>
          <View style={{flexDirection:'row',height:1000*unitWidth}}>
              <View style={{width:200*unitWidth,marginBottom:100}}>
-             <View style={{marginBottom:140}}>
-             <TouchableHighlight style={[style.button01,{backgroundColor:this.state.color}]} onPress={()=>this.setState({data:firstcanteenmeal,color:'#FF7F00',color1:'white',color2:'white',color3:'white',color4:'white'})}>
-                <Text>1食堂</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[style.button02,{backgroundColor:this.state.color1}]}onPress={()=>this.setState({data:secondcanteenmeal,color:'white',color1:'#FF7F00',color2:'white',color3:'white',color4:'white'})}>
-                <Text>2食堂</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[style.button03,{backgroundColor:this.state.color2}]}onPress={()=>this.setState({data:thirdcanteenmeal,color:'white',color1:'white',color2:'#FF7F00',color3:'white',color4:'white'})}>
-                <Text>3食堂</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[style.button04,{backgroundColor:this.state.color3}]}onPress={()=>this.setState({data:fourthcanteenmeal,color:'white',color1:'white',color2:'white',color3:'#FF7F00',color4:'white'})}>
-                <Text>4食堂</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[style.button05,{backgroundColor:this.state.color4}]}onPress={()=>this.setState({data:qzcanteenmeal,color:'white',color1:'white',color2:'white',color3:'white',color4:'#FF7F00'})}>
-                <Text>清真食堂</Text>
-                </TouchableHighlight>
-                </View>
                 <View style={style.circle}>
                 <TouchableHighlight onPress={()=>{
-                    for(let i=0;i<this.state.data.length;i++){
-                        if(this.state.data[i].num!=0){
-                            this.state.choose.push(this.state.data[i])
+                    for(let i=0;i<this.state.meals.length;i++){
+                        if(this.state.meals[i].num!=0){
+                            this.state.choose.push(this.state.meals[i])
                         }
                     }
                     this.setState({isVisible:true,choose:this.state.choose})}}>
@@ -90,7 +143,7 @@ decendcount=({item})=>{
             </View>
             <FlatList
             keyExtractor={this.keyExtractor}
-            data={this.state.data}
+            data={this.state.meals}
             extraData={this.state}
             renderItem={({item}) =>
             <ListItem         
@@ -100,12 +153,13 @@ decendcount=({item})=>{
                 <View style={{flexDirection:'row',justifyContent: 'space-around',}}>
                 <Text >{"价格："+item.price}</Text>
                 <View  style={{flexDirection:'row',justifyContent: 'center',}}>
-                <TouchableHighlight style={style.button1}onPress={this.addcount
-                    /* ()=>{    
-                    this.state.data[item.id-1].num++;
+                <TouchableHighlight style={style.button1}onPress={
+                    ()=>{ 
+                      //  console.log(this.state.meals[0])   
+                    this.state.meals[item.id].num++;
                     this.state.total=this.state.total+item.price;
                     console.log(this.state.total)
-                    this.setState({data:this.state.data,total:this.state.total});}*/}>
+                    this.setState({meals:this.state.meals,total:this.state.total});}}>
                 <Icon name="add" />
                 </TouchableHighlight>
                 <View style={{width:50*unitWidth,height:50*unitWidth,borderWidth:1*unitWidth,textAlign:'center',
@@ -113,12 +167,12 @@ decendcount=({item})=>{
         justifyContent:'center',}}>
                   <Text >{item.num}</Text>
                   </View>
-                  <TouchableHighlight style={style.button1}onPress={this.decendcount
-                      /* ()=>{
-                   this.state.data[item.id-1].num--;console.log(this.state.data[item.id])
+                  <TouchableHighlight style={style.button1}onPress={
+                       ()=>{
+                   this.state.meals[item.id].num--;console.log(this.state.meals[item.id])
                    this.state.total=this.state.total-item.price
                     console.log(this.state.total)
-                    this.setState({data:this.state.data,total:this.state.total})}*/}>
+                    this.setState({meals:this.state.meals,total:this.state.total})}}>
                 <Icon name="remove" />
                 </TouchableHighlight>
                 </View>
@@ -142,8 +196,8 @@ decendcount=({item})=>{
     <Text style={style.text2}>总计 {this.state.total+"元"}</Text>
     <View style={{flexDirection:'row',width:260,height:60}}>
     <TouchableHighlight style={{width:100,height:40,marginRight:20,marginLeft:20,borderWidth:1*unitWidth}}onPress={()=>{
-        for(let i=0;i<this.state.data.length;i++){
-            this.state.data[i].num=0;
+        for(let i=0;i<this.state.meals.length;i++){
+            this.state.meals[i].num=0;
         }
         this.state.choose['time']=this.getmyDate()
         this.state.choose['total']=this.state.total
@@ -152,7 +206,7 @@ decendcount=({item})=>{
         userchoose.push(this.state.choose)
         this.state.choose=[]
         
-        this.setState({isVisible:false,choose:this.state.choose,data:this.state.data,total:this.state.total})}
+        this.setState({isVisible:false,choose:this.state.choose,meals:this.state.meals,total:this.state.total})}
         }>
         <View style={style.textinbutton}>
          <Text style={style.text1}>确定</Text>
