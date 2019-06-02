@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View} from 'react-native'
 import {Button}from'react-native-elements'
 export var datas=[]
+export var initcanteenmeals=[]
 export class MyInformationScreen extends Component{
     static navigationOptions = {
         //   tabBarVisible: false, // 隐藏底部导航栏
@@ -19,16 +20,32 @@ export class MyInformationScreen extends Component{
                 <Button buttonStyle={{height:150,width:300,marginBottom:10,}}title='为菜品打分' type='outline' onPress={()=>{ 
                         fetch('http://192.168.43.40/app-contact/getdatebase.php')
                     .then(res=>res.json()) 
-                    .then(data=> { 
-                      console.log(data);   
+                    .then(data=> {  
                       datas=data
+                      fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+      method: 'post', 
+      headers: { 
+        "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+      }, 
+      body: 'dbname=buct&dbtable=firstmeal'
+    })
+    .then(res=>res.json()) 
+    .then(data=> {   
+     initcanteenmeals=data
+       console.log(initcanteenmeals)
+     this.props.navigation.navigate('scoreformeal')
+    }) 
+    .catch(function (error) { 
+      console.log('Request failed', error); 
+    }); 
+                       
                     }) 
                     .catch(function (error) { 
                       console.log('Request failed', error); 
                     });  
-                    console.log(datas)
-                   if(datas!=[])
-                this.props.navigation.navigate('scoreformeal')}}/>
+                  
+                   
+                }}/>
                 </View>
                 <View >
                 <Button buttonStyle={{height:150,width:300,marginBottom:10}}title='修改菜品' type='outline' onPress={()=>
@@ -37,13 +54,27 @@ export class MyInformationScreen extends Component{
                     .then(data=> { 
                       console.log(data);   
                       datas=data
+                      fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+                        method: 'post', 
+                        headers: { 
+                          "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+                        }, 
+                        body: 'dbname=buct&dbtable=firstmeal'
+                      })
+                      .then(res=>res.json()) 
+                      .then(data=> {   
+                       initcanteenmeals=data
+                         console.log(datas+initcanteenmeals)
+                       this.props.navigation.navigate('changemeals')
+                      }) 
+                      .catch(function (error) { 
+                        console.log('Request failed', error); 
+                      }); 
                     }) 
                     .catch(function (error) { 
                       console.log('Request failed', error); 
                     }); 
-                        console.log(datas)
-                        if(datas!=[])
-                        this.props.navigation.navigate('changemeals')}}/>
+                       }}/>
                 </View>
             </View>
         )

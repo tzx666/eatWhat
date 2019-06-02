@@ -1,9 +1,11 @@
+//存在问题：评分系统无法实时渲染
 import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
 import {datas}from './MyInformationScreen'
 import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Rating, AirbnbRating } from 'react-native-elements';
+import {initcanteenmeals}from './MyInformationScreen'
 export class scoreformealScreen extends Component{
     static navigationOptions = {
         //tabBarVisible: false, // 隐藏底部导航栏
@@ -13,26 +15,13 @@ export class scoreformealScreen extends Component{
           super(prpos)
           this.state={feature:['早餐','午餐','午晚餐','晚餐','全天供应'],universityname:datas
           ,universitycanteens:['firstmeal', 'fourthcanteen', 'secondmeal', 'thirdcanteen'],
-          canteenmeals:[{ name: '皮蛋粥', price: '2', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '小笼包/煎包', price: '6', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '蒸饺/煎饺', price: '6', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '皮蛋瘦肉粥', price: '2', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '鸡蛋', price: '1', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '土豆卷饼', price: '4', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '肉饼', price: '6', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '吊炉饼', price: '4.5', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '小碗米饭', price: '0.5', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '大碗米饭', price: '1', feature: '全天供应',score:0,scorepeople:0 },
-          { name: '小米粥（自选）', price: '1', feature: '早餐',score:0,scorepeople:0 },
-          { name: '咸菜', price: '0.5', feature: '早餐',score:0,scorepeople:0 },
-          { name: '豆腐脑', price: '1', feature: '早餐',score:0,scorepeople:0 },
-          { name: '夹肠蛋饼（自选）', price: '2.5', feature: '早餐',score:0,scorepeople:0 },
-          { name: '大碗宽面', price: '10', feature: '全体供应',score:0,scorepeople:0 } ]
-            ,selecteduniversity:'buct',selectedcanteen:'firstmeal',isVisible:false,onchangmeal:'',onchagmealprice:0,onchagmealfeature:''}
+          canteenmeals:initcanteenmeals
+            ,selecteduniversity:'buct',selectedcanteen:'firstmeal',isVisible:false,onseocremeal:''
+            ,isVisible:false,userscore:3,score:0,scorepeople:0,onseocremealid:-1}
             console.log(this.state.universityname)
       }
     render(){
-        if(this.state.universityname==[])
+        if(this.state.universityname.length==0)
         return(<Text>waiting</Text>)
         else{
           return(
@@ -121,12 +110,56 @@ export class scoreformealScreen extends Component{
             </View>
         )}
         bottomDivider='true'
-        //设置修改菜单及原来的参数
+        onPress={()=>{this.setState({isVisible:true,onseocremeal:item.name,score:item.score,scorepeople:item.scorepeople,onseocremealid:i})}}
+        //设置评分及原来的参数
                     />
                   ))
                 } 
                 </ScrollView>
                 </View>
+                <Overlay isVisible={this.state.isVisible}>
+                <Rating
+  type='star'
+  ratingCount={5}
+  imageSize={30}
+  startingValue={3}
+  showRating
+  onFinishRating={(rating)=>{ console.log("Rating is: " + rating)
+  this.setState({userscore:rating})}}
+/>
+                <Text>评分完成后请点击下方按钮</Text>
+                <Button title="submit"onPress={()=>{
+                    //更新该条的评分和评论人数
+                    this.state.scorepeople=parseInt(this.state.scorepeople)+1;
+                    console.log(this.state.onseocremealid+" "+this.state.score+" "+this.state.userscore+" "+this.state.scorepeople)
+                    this.state.score=(parseFloat(this.state.score)*(parseInt(this.state.scorepeople)-1)+parseFloat(this.state.userscore))/parseInt(this.state.scorepeople)
+                    console.log(this.state.selecteduniversity+this.state.selectedcanteen+this.state.onseocremeal+this.state.score+this.state.scorepeople)
+                    fetch('http://192.168.43.40/app-contact/changescore.php',{ 
+      method: 'post', 
+      headers: { 
+        "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+      }, 
+      body: 'dbname='+this.state.selecteduniversity.toString()+'&dbtable='+this.state.selectedcanteen.toString()+'&name='+this.state.onseocremeal.toString()+'&score='+this.state.score+'&scorepeople='+this.state.scorepeople
+    })
+    .then(res=>res.text()) 
+    .then(data=> {
+        if(data==1){
+            Alert.alert("感谢评分")
+            this.state.canteenmeals[this.state.onseocremealid]['score']=this.state.score
+            this.state.canteenmeals[this.state.onseocremealid]['scorepeople']=this.state.scorepeople
+            this.setState({userscore:3,score:this.state.score,scorepeople:this.state.scorepeople,isVisible:false,onseocremealid:-1,canteenmeals:this.state.canteenmeals})
+        }   
+        else{
+            Alert.alert("评分失败，请检查网络或稍后再试吧")
+        }
+      console.log(data)
+    }) 
+    .catch(function (error) { 
+      console.log('Request failed', error); 
+    }); 
+                }}/>
+                <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+                </Overlay>
             </View>
         )  
         }

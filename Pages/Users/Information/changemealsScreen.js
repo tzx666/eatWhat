@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
 import {datas}from './MyInformationScreen'
+import {initcanteenmeals}from './MyInformationScreen'
 import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 export class changemealsScreen extends Component{
@@ -12,21 +13,7 @@ export class changemealsScreen extends Component{
           super(prpos)
           this.state={feature:['早餐','午餐','午晚餐','晚餐','全天供应'],universityname:datas
           ,universitycanteens:['firstmeal', 'fourthcanteen', 'secondmeal', 'thirdcanteen'],
-          canteenmeals:[{ name: '皮蛋粥', price: '2', feature: '全天供应' },
-          { name: '小笼包/煎包', price: '6', feature: '全天供应' },
-          { name: '蒸饺/煎饺', price: '6', feature: '全天供应' },
-          { name: '皮蛋瘦肉粥', price: '2', feature: '全天供应' },
-          { name: '鸡蛋', price: '1', feature: '全天供应' },
-          { name: '土豆卷饼', price: '4', feature: '全天供应' },
-          { name: '肉饼', price: '6', feature: '全天供应' },
-          { name: '吊炉饼', price: '4.5', feature: '全天供应' },
-          { name: '小碗米饭', price: '0.5', feature: '全天供应' },
-          { name: '大碗米饭', price: '1', feature: '全天供应' },
-          { name: '小米粥（自选）', price: '1', feature: '早餐' },
-          { name: '咸菜', price: '0.5', feature: '早餐' },
-          { name: '豆腐脑', price: '1', feature: '早餐' },
-          { name: '夹肠蛋饼（自选）', price: '2.5', feature: '早餐' },
-          { name: '大碗宽面', price: '10', feature: '全体供应' } ]
+          canteenmeals:initcanteenmeals
             ,selecteduniversity:'buct',selectedcanteen:'firstmeal',isVisible:false,onchangmeal:'',onchagmealprice:0,onchagmealfeature:''}
       }
     render(){

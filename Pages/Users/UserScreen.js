@@ -51,7 +51,7 @@ export class UserScreen extends Component{
                 rightIcon={{name:'chevron-right'}}
                 onPress={() => this.props.navigation.navigate('About')}/>
                 </View> 
-                <Overlay isVisible={this.state.isVisible}>
+                <Overlay isVisible={this.state.isVisible} fullScreen="true">
                   <ScrollView>
               <TextInput autoFocus='true' style={{height: 40, borderColor: 'gray', borderWidth: 1}}
                 placeholder='input username'
