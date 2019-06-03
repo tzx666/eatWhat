@@ -24,8 +24,6 @@ export class changemealsScreen extends Component{
   style={{ height: 50, width: 360 }}
   onValueChange={(itemValue, itemIndex) => {
      this.setState({selecteduniversity:itemValue})
-    console.log(itemValue)
-   
       fetch('http://192.168.43.40/app-contact/showdatabase.php',{ 
       method: 'post', 
       headers: { 

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation"
 import {Button,View}from 'react-native'
 import { HomeScreen} from './Pages/HomeScreen'
-import {DetailsScreen} from './Pages/DetailsScreen'
 import {UserScreen} from './Pages/Users/UserScreen'
 import{HistoryScreen}from'./Pages/Users/HistoryScreen'
 import {MyInformationScreen}from './Pages/Users/Information/MyInformationScreen'
@@ -30,7 +29,6 @@ const Users=createStackNavigator({
 const AppNavigator = createBottomTabNavigator(
   {
     Home1: HomeScreen,
-    Details: DetailsScreen,
     Users:Users,
   },
   {

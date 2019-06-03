@@ -17,12 +17,10 @@ export class UserScreen extends Component{
                       {
                         this.state.permission==-1? <TouchableHighlight onPress={()=>this.setState({isVisible:true})}>
                    <View style={style.avatar}>
-                    <Avatar size="large" rounded source={{ uri:'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg', }} />
                     <Text style={{fontSize:50*unitWidth,}}>请先登陆/注册</Text>
                 </View></TouchableHighlight>
                 :<TouchableHighlight onPress={()=>this.props.navigation.navigate('MyInformation')}>
                 <View style={style.avatar}>
-        <Avatar size="large" rounded source={{ uri:'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg', }} />
         {
          userinfo.permission==1?<Text style={{fontSize:50*unitWidth,}}>普通用户：{this.state.name}</Text>:
           <Text style={{fontSize:50*unitWidth,}}>管理员：{this.state.name}</Text>

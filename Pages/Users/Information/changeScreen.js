@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
+import { StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
 import {superdatas}from './MyInformationScreen'
 import {superdatamealss}from './MyInformationScreen'
 import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
@@ -8,8 +8,7 @@ import {userinfo}from '../UserScreen'
 export class changeScreen extends Component{
     //首先根据管理员所在学校查询表的数量，并列举，然后添加/删除新的食堂
     static navigationOptions = {
-        //tabBarVisible: false, // 隐藏底部导航栏
-        header:null,  //隐藏顶部导航栏
+        header:null,
       };
       constructor(prpos){
           //1模式是修改菜品，2模式修改食堂，3模式新增菜单
