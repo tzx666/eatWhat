@@ -1,8 +1,8 @@
 //存在问题：评分系统无法实时渲染
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
+import {Platform, StyleSheet, Text, View,Picker,TextInput,Alert} from 'react-native'
 import {datas}from './MyInformationScreen'
-import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
+import { ListItem,Overlay,Button  } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Rating, AirbnbRating } from 'react-native-elements';
 import {initcanteenmeals}from './MyInformationScreen'
@@ -97,7 +97,7 @@ export class scoreformealScreen extends Component{
         title={item.name}
         subtitle={(
             <View>
-             <Text>价格：+{item.price}+    供应时间：+{item.feature}</Text>
+             <Text>价格：{item.price}    供应时间：{item.feature}</Text>
             <View style={{flexDirection:'row'}}>
             <Rating
             ratingCount={5}
@@ -128,7 +128,7 @@ export class scoreformealScreen extends Component{
   this.setState({userscore:rating})}}
 />
                 <Text>评分完成后请点击下方按钮</Text>
-                <Button title="submit"onPress={()=>{
+                <Button type='outline' buttonStyle={{marginBottom:5}} title="submit"onPress={()=>{
                     //更新该条的评分和评论人数
                     this.state.scorepeople=parseInt(this.state.scorepeople)+1;
                     console.log(this.state.onseocremealid+" "+this.state.score+" "+this.state.userscore+" "+this.state.scorepeople)
@@ -158,7 +158,7 @@ export class scoreformealScreen extends Component{
       console.log('Request failed', error); 
     }); 
                 }}/>
-                <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+                <Button type='outline' buttonStyle={{marginBottom:5}} title="back"onPress={()=>{this.setState({isVisible:false})}}/>
                 </Overlay>
             </View>
         )  

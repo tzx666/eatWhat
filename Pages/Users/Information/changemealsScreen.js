@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
+import {Platform, StyleSheet, Text, View,Picker,TextInput,Alert} from 'react-native'
 import {datas}from './MyInformationScreen'
 import {initcanteenmeals}from './MyInformationScreen'
-import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
+import { ListItem,Overlay,CheckBox,Button  } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 export class changemealsScreen extends Component{
     static navigationOptions = {
@@ -116,7 +116,8 @@ export class changemealsScreen extends Component{
           ))
       }
               </Picker>
-            <Button title="submit" onPress={()=>{
+              <View style={{flex:1,flexDirection:'row',justifyContent:'space-around'}}>
+            <Button type='outline'title="submit" onPress={()=>{
               console.log('dbname='+this.state.selecteduniversity.toString()+'&dbtable='
               +this.state.selectedcanteen.toString()+'&name='+this.state.onchangmeal.toString()
               +'&price='+this.state.onchagmealprice+'&feature='+this.state.onchagmealfeature.toString())
@@ -142,7 +143,8 @@ export class changemealsScreen extends Component{
                 console.log('Request failed', error); 
               }); 
             }}/>
-            <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+            <Button type='outline'title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+            </View>
           </Overlay>
             </View>
         )

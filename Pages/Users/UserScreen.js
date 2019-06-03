@@ -5,6 +5,14 @@ import { ListItem,Overlay,CheckBox } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler';
 import{Loginfirst,Users,Regisit,Login}from'D:/eatWhat/components/logins'
 import{loginurl,loginsearchurl,superadurl}from 'D:/eatWhat/data/urls.js'
+import {storage}from'D:/eatWhat/data/storage'
+import { NavigationActions, StackActions } from 'react-navigation';
+const resetAction = StackActions.reset({ 
+  index: 0, 
+  actions: [ 
+    NavigationActions.navigate({ routeName: 'Tabs' }), 
+  ], 
+});
 export var userinfo=[]//用户基本信息
 userinfo['permission']=-1
 //设置用户权限，负责用户登陆
@@ -13,6 +21,51 @@ export class UserScreen extends Component{
     constructor(props){
         super(props)
         this.state={isVisible:false,name:'',password:'',email:'',permission:-1,isapplication:false,checked:false}}
+        componentDidMount(){
+          storage.load({
+            key: 'login',
+            // autoSync(默认为true)意味着在没有找到数据或数据过期时自动调用相应的sync方法
+            autoSync: true,
+    
+            // syncInBackground(默认为true)意味着如果数据过期，
+            // 在调用sync方法的同时先返回已经过期的数据。
+            // 设置为false的话，则等待sync方法提供的最新数据(当然会需要更多时间)。
+            syncInBackground: true,
+    
+            // 你还可以给sync方法传递额外的参数
+            syncParams: {
+                extraFetchOptions: {
+                    // 各种参数
+                },
+                someFlag: true,
+            },
+        }).then(ret => {
+            // 如果找到数据，则在then方法中返回
+            // 注意：这是异步返回的结果（不了解异步请自行搜索学习）
+            // 你只能在then这个方法内继续处理ret数据
+            // 而不能在then以外处理
+            // 也没有办法“变成”同步返回
+            // 你也可以使用“看似”同步的async/await语法
+            console.log(ret)
+            userinfo['name']=ret.name
+            userinfo['password']=ret.password
+            userinfo['permission']=ret.permission
+            this.setState({name:ret.name,password:ret.password,permission:ret.permission})
+        }).catch(err => {
+            //如果没有找到数据且没有sync方法，
+            //或者有其他异常，则在catch中返回
+            console.warn(err.message);
+            switch (err.name) {
+                case 'NotFoundError':
+                    // TODO;
+                    this.setState({ data: 'NotFoundError' });
+                    break;
+                case 'ExpiredError':
+                    this.setState({ data: 'ExpiredError' });
+                    break;
+            }
+        })
+        }
       _loginfirst=()=>this.setState({isVisible:true})
         _loginusers=()=>this.props.navigation.navigate('MyInformation')
         Rname=(name) => this.setState({name})
@@ -39,6 +92,16 @@ export class UserScreen extends Component{
                userinfo['password']=this.state.password
                userinfo['email']=this.state.email
                userinfo['permission']=this.state.permission
+               storage.save({
+                key: 'login',
+                data: {
+                    name:this.state.name,
+                    password:this.state.password,
+                    permission:this.state.permission
+                },
+                //expires为有效时间
+                expires: 1000 * 3600
+            })
                Alert.alert("注册成功")
              }
              else if (data==6){
@@ -58,6 +121,7 @@ export class UserScreen extends Component{
            ); 
          }
          Lset=()=>{ 
+           console.log(this.state.checked)
           if(this.state.checked==false){
            fetch(loginsearchurl, { 
               method: 'post', 
@@ -76,7 +140,17 @@ export class UserScreen extends Component{
                 userinfo['password']=this.state.password
                 userinfo['email']=this.state.email
                 userinfo['permission']=this.state.permission
-                console.log(userinfo)
+                 console.log(userinfo)
+                storage.save({
+                  key: 'login',
+                  data: {
+                      name:this.state.name,
+                      password:this.state.password,
+                      permission:this.state.permission
+                  },
+                  //expires为有效时间
+                  expires: 1000 * 3600
+              })
                 Alert.alert("登陆成功")
               }
               else if (data==-1){
@@ -114,6 +188,16 @@ export class UserScreen extends Component{
                 userinfo['password']=this.state.password
                 userinfo['permission']=this.state.permission
                 userinfo['universityid']=data
+                storage.save({
+                  key: 'login',
+                  data: {
+                      name:this.state.name,
+                      password:this.state.password,
+                      permission:this.state.permission
+                  },
+                  //expires为有效时间
+                  expires: 1000 * 3600
+              })
                 console.log(userinfo)
                 Alert.alert("管理员登陆成功")
               }

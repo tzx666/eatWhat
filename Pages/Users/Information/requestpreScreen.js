@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Alert,TextInput} from 'react-native'
+import {StyleSheet, Text, View,Alert,TextInput} from 'react-native'
 import {datas}from './MyInformationScreen'
 import {userinfo}from '../UserScreen'
+import {Button} from 'react-native-elements';
 export class requestpreScreen extends Component{
     static navigationOptions = {
       //  tabBarVisible: false, // 隐藏底部导航栏
@@ -16,19 +17,26 @@ export class requestpreScreen extends Component{
         return(
             <View style={style.container}>
                 <Text style={{fontSize:30}}>申请超级管理员</Text>
-                        <TextInput autoFocus='true' style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                placeholder='输入想添加的大学名称'
-        onChangeText={(universityname) => this.setState({universityname})}
-        value={this.state.universityname}/>
-        <TextInput autoFocus='true' style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+                  <Text style={{width:80}}>申请大学:</Text>
+                        <TextInput autoFocus='true' style={{height: 40, width:280, borderColor: 'gray', borderWidth: 1,marginBottom:5,borderRadius:15}}
+                       placeholder='输入想添加的大学名称'
+                      onChangeText={(universityname) => this.setState({universityname})}
+                      value={this.state.universityname}/>
+                </View>
+                <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+                  <Text style={{width:80}}>申请大学ID:</Text>
+        <TextInput autoFocus='true' style={{height: 40,width:280,  borderColor: 'gray', borderWidth: 1,marginBottom:5,borderRadius:15}}
         placeholder='输入申请学院的缩写(3字或4字ex：buct/pku)'
         onChangeText={(university) => this.setState({university})}
-        value={this.state.university}/>
-<TextInput autoFocus='true' style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+        value={this.state.university}/></View>
+        <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+        <Text style={{width:80}}>申请理由:</Text>
+<TextInput autoFocus='true' style={{height: 40,width:280, borderColor: 'gray', borderWidth: 1,marginBottom:40,borderRadius:15}}
         placeholder='申请理由'
         onChangeText={(texts) => this.setState({texts})}
-        value={this.state.texts}/>
-          <Button title='申请' onPress={()=>{
+        value={this.state.texts}/></View>
+          <Button type='outline'title='申请' buttonStyle={{width:300,height:60}} onPress={()=>{
             //首先检测该学校是否存在，如果存在提示无法申请，如果不存在且申请字数大于20，申请通过，否则申请不通过,数据库创建成功后，将用户信息添加到数据库
             for(let i in datas){
               if(datas[i]['name']==this.state.universityname&&this.state.university==datas[i]['engname']){

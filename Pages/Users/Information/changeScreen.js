@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, View,Button,Picker,TextInput,Alert} from 'react-native'
+import { StyleSheet, Text, View,Picker,TextInput,Alert} from 'react-native'
 import {superdatas}from './MyInformationScreen'
 import {superdatamealss}from './MyInformationScreen'
-import { ListItem,Overlay,CheckBox  } from 'react-native-elements';
+import { ListItem,Overlay,CheckBox,Button  } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import {userinfo}from '../UserScreen'
 export class changeScreen extends Component{
@@ -19,6 +19,31 @@ export class changeScreen extends Component{
            ,selectedcanteen:superdatas[0],isVisible:false,onchangmeal:'',onchagmealprice:0,onchagmealfeature:''
            ,changemode:1,mode:1,name:'',price:'',feature1:'',onaddcanteen:superdatas[0],onchangecanteen:''}
       }
+      selectedCan=(itemValue, itemIndex) => {
+        console.log(this.state.selecteduniversity+' '+itemValue)
+        this.setState({selectedcanteen:itemValue})
+        fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+          method: 'post', 
+          headers: { 
+            "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
+          }, 
+          body: 'dbname='+this.state.universityname.toString()+'&dbtable='+itemValue
+        })
+        .then(res=>res.json()) 
+        .then(data=> {  
+            if(data!=-2){
+                this.state.canteenmeals=data
+          this.setState({canteenmeals:this.state.canteenmeals})
+          console.log(this.state.canteenmeals)
+            } else{
+                superdatamealss=[{name:'当前暂无菜品，请先添加'}]
+            }
+          
+        }) 
+        .catch(function (error) { 
+          console.log('Request failed', error); 
+        }); 
+        }
     render(){
         return(
             <View>
@@ -26,38 +51,14 @@ export class changeScreen extends Component{
               <Picker
   selectedValue={this.state.selectedcanteen}
   style={{ height: 50, width: 360 }}
-  onValueChange={(itemValue, itemIndex) => {
-    console.log(this.state.selecteduniversity+' '+itemValue)
-    this.setState({selectedcanteen:itemValue})
-    fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
-      method: 'post', 
-      headers: { 
-        "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
-      }, 
-      body: 'dbname='+this.state.universityname.toString()+'&dbtable='+itemValue
-    })
-    .then(res=>res.json()) 
-    .then(data=> {  
-        if(data!=-2){
-            this.state.canteenmeals=data
-      this.setState({canteenmeals:this.state.canteenmeals})
-      console.log(this.state.canteenmeals)
-        } else{
-            superdatamealss=[{name:'当前暂无菜品，请先添加'}]
-        }
-      
-    }) 
-    .catch(function (error) { 
-      console.log('Request failed', error); 
-    }); 
-    }}>
+  onValueChange={this.selectedCan}>
       {
           this.state.universitycanteens.map((item1,i)=>(
                <Picker.Item label={item1} value={item1} />
           ))
       }
               </Picker>
-              <Button title="新增食堂" onPress={()=>{
+              <Button type='outline' title="新增食堂" onPress={()=>{
                   this.setState({changemode:2,isVisible:true})
               }}/>
                
@@ -73,7 +74,7 @@ export class changeScreen extends Component{
                     />
                   ))
                 } 
-                <Button title="新增菜品"onPress={()=>{
+                <Button type='outline' title="新增菜品"onPress={()=>{
                   this.setState({changemode:2,isVisible:true})}}/>
                 </ScrollView>
 
@@ -101,7 +102,7 @@ export class changeScreen extends Component{
           ))
       }
               </Picker>
-            <Button title="submit" onPress={()=>{
+            <Button type='outline'title="submit" buttonStyle={{marginBottom:10}}onPress={()=>{
               console.log('dbname='+this.state.selecteduniversity.toString()+'&dbtable='
               +this.state.selectedcanteen.toString()+'&name='+this.state.onchangmeal.toString()
               +'&price='+this.state.onchagmealprice+'&feature='+this.state.onchagmealfeature.toString())
@@ -127,7 +128,7 @@ export class changeScreen extends Component{
                 console.log('Request failed', error); 
               }); 
             }}/>
-            <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/></View>:
+            <Button type='outline'title="back"onPress={()=>{this.setState({isVisible:false})}}/></View>:
             <View>
                 <Picker  selectedValue={this.state.mode}
   style={{ height: 50, width: 360 }}
@@ -175,7 +176,7 @@ export class changeScreen extends Component{
           ))
       }
               </Picker>
-              <Button title="submit" onPress={()=>{
+              <Button type='outline'title="submit" onPress={()=>{
               console.log('dbname='+this.state.universityname.toString()+'&dbtable='
               +this.state.onaddcanteen.toString()+'&name='+this.state.name.toString()
               +'&price='+this.state.price+'&feature='+this.state.onchagmealfeature.toString())
@@ -203,7 +204,7 @@ export class changeScreen extends Component{
                 console.log('Request failed', error); 
               }); 
             }}/>
-            <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+            <Button type='outline'title="back"onPress={()=>{this.setState({isVisible:false})}}/>
                     </View>
                          :
                          <View>
@@ -211,7 +212,8 @@ export class changeScreen extends Component{
         placeholder='请输入食堂名称'
         onChangeText={(onchangecanteen) => this.setState({onchangecanteen})}
         value={this.state.onchangecanteen}/>
-        <Button title="submit" onPress={()=>{
+        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+        <Button title="submit" buttonStyle={{marginBottom:10}} onPress={()=>{
              console.log(this.state.universityname+this.state.onchangecanteen)
               fetch('http://192.168.43.40/app-contact/newtable.php',{ 
                 method: 'post', 
@@ -235,6 +237,7 @@ export class changeScreen extends Component{
               }); 
             }}/>
             <Button title="back"onPress={()=>{this.setState({isVisible:false})}}/>
+            </View>
                         </View>
                 }
             </View>

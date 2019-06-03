@@ -180,6 +180,7 @@ justifyContent:'center',}}>
                     onValueChange={this.changeschoolvalue}>
                      {this.state.school.map((item1,i)=>(<Picker.Item label={item1.name} value={item1.engname}/>))}
             </Picker>  
+            <View style={{borderWidth:1*unitWidth,marginBottom:1,marginTop:1}}></View>
             <Picker
                    selectedValue={this.state.selectedcanteen}
                   style={{ height: 50, width: 360 }}
