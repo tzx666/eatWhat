@@ -3,12 +3,38 @@ import {Platform, StyleSheet, Text, View,Button,ScrollView} from 'react-native'
 import{userchoose}from '../HomeScreen'
 import {ListItem, Icon,Overlay}from 'react-native-elements'
 import {unitWidth, width, height}from'../Adapt'
+import{storage}from'D:/eatWhat/data/storage'
 console.log(userchoose)
 export class HistoryScreen extends Component{
     static navigationOptions = {
-        //   tabBarVisible: false, // 隐藏底部导航栏
-           header:null,  //隐藏顶部导航栏
+           header:null, 
          };
+         componentDidMount(){
+            storage.load({
+                key: 'loginState',
+                autoSync: true,
+                syncInBackground: true,
+                syncParams: {
+                    extraFetchOptions: {
+                    },
+                    someFlag: true,
+                },
+            }).then(ret => {
+               console.log(ret.userchoose);
+               userchoose=ret.userchoose
+            }).catch(err => {
+                console.warn(err.message);
+                switch (err.name) {
+                    case 'NotFoundError':
+                        // TODO;
+                        this.setState({ data: 'NotFoundError' });
+                        break;
+                    case 'ExpiredError':
+                        this.setState({ data: 'ExpiredError' });
+                        break;
+                }
+            })
+          }
     render(){
         return(      
             <ScrollView>
@@ -46,8 +72,7 @@ const style=StyleSheet.create({
         backgroundColor:'white',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        borderBottomWidth:1*unitWidth,
-        marginBottom:5*unitWidth,
+        marginBottom:10*unitWidth,
         borderBottomColor:'gray',
     }
 })

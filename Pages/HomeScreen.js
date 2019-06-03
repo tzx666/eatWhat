@@ -4,6 +4,7 @@ import{getdatebaseurl,showdatabaseurl,listmealurl}from'../data/urls'
 import {ListItem, Icon,Overlay}from 'react-native-elements'
 import {unitWidth, width, height, unitHeight}from'../Pages/Adapt'
 import {Overlayforcount}from'../components/overlayforhome'
+import {storage}from'../data/storage'
 export var userchoose=[]
 console.log(height+" "+width)
 export class HomeScreen extends Component{
@@ -45,7 +46,8 @@ export class HomeScreen extends Component{
                     }) 
                     .catch(function (error) { 
                       console.log('Request failed', error); 
-                    }); 
+                    });
+          
     }
     changeschoolvalue=(itemValue, itemIndex) => {
       this.setState({selecteduniversity:itemValue})
@@ -149,7 +151,16 @@ justifyContent:'center',}}>
       console.log(this.state.choose)
       userchoose.push(this.state.choose)
       this.state.choose=[]
-      this.setState({isVisible:false,choose:this.state.choose,meals:this.state.meals,total:this.state.total})}
+      this.setState({isVisible:false,choose:this.state.choose,meals:this.state.meals,total:this.state.total})
+      storage.save({
+        key: 'loginState',
+        data: {
+            userchoose:userchoose
+        },
+        //expires为有效时间
+        expires: 1000 * 3600
+    })
+    }
       remove=()=>{
         this.state.choose=[]
       this.setState({isVisible:false,choose:this.state.choose})}
