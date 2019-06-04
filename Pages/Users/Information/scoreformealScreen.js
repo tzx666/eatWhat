@@ -33,7 +33,7 @@ export class scoreformealScreen extends Component{
      this.setState({selecteduniversity:itemValue})
     console.log(itemValue)
    
-      fetch('http://qt8kjn.natappfree.cc/app-contact/showdatabase.php',{ 
+      fetch('http://251n6v6717.wicp.vip/app-contact/showdatabase.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -65,7 +65,7 @@ export class scoreformealScreen extends Component{
   onValueChange={(itemValue, itemIndex) => {
     console.log(this.state.selecteduniversity+' '+itemValue)
     this.setState({selectedcanteen:itemValue})
-    fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
+    fetch('http://251n6v6717.wicp.vip/app-contact/listmeal.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -133,7 +133,7 @@ export class scoreformealScreen extends Component{
                     console.log(this.state.onseocremealid+" "+this.state.score+" "+this.state.userscore+" "+this.state.scorepeople)
                     this.state.score=(parseFloat(this.state.score)*(parseInt(this.state.scorepeople)-1)+parseFloat(this.state.userscore))/parseInt(this.state.scorepeople)
                     console.log(this.state.selecteduniversity+this.state.selectedcanteen+this.state.onseocremeal+this.state.score+this.state.scorepeople)
-                    fetch('http://qt8kjn.natappfree.cc/app-contact/changescore.php',{ 
+                    fetch('http://251n6v6717.wicp.vip/app-contact/changescore.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 

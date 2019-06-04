@@ -11,11 +11,11 @@ export class MyInformationScreen extends Component{
          };
          navigating=()=>this.props.navigation.navigate('requestpre')
          preforscore=()=>{ 
-          fetch('http://qt8kjn.natappfree.cc/app-contact/getdatebase.php')
+          fetch('http://251n6v6717.wicp.vip/app-contact/getdatebase.php')
       .then(res=>res.json()) 
       .then(data=> {  
         datas=data
-        fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
+        fetch('http://251n6v6717.wicp.vip/app-contact/listmeal.php',{ 
 method: 'post', 
 headers: { 
 "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -37,12 +37,12 @@ console.log('Request failed', error);
       });                   
     }
     preforchangemeal=()=>
-    {   fetch('http://qt8kjn.natappfree.cc/app-contact/getdatebase.php')
+    {   fetch('http://251n6v6717.wicp.vip/app-contact/getdatebase.php')
     .then(res=>res.json()) 
     .then(data=> { 
       console.log(data);   
       datas=data
-      fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
+      fetch('http://251n6v6717.wicp.vip/app-contact/listmeal.php',{ 
         method: 'post', 
         headers: { 
           "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -65,7 +65,7 @@ console.log('Request failed', error);
        }
        preforcanteen=()=>{
          console.log(userinfo.universityid)
-        fetch('http://qt8kjn.natappfree.cc/app-contact/showdatabase.php',{ 
+        fetch('http://251n6v6717.wicp.vip/app-contact/showdatabase.php',{ 
             method: 'post', 
             headers: { 
               "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -82,7 +82,7 @@ console.log('Request failed', error);
               for(let i=1;i<=data[0];i++){
               superdatas.push(data[i])
             }
-             fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
+             fetch('http://251n6v6717.wicp.vip/app-contact/listmeal.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 

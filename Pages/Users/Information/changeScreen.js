@@ -22,7 +22,7 @@ export class changeScreen extends Component{
       selectedCan=(itemValue, itemIndex) => {
         console.log(this.state.selecteduniversity+' '+itemValue)
         this.setState({selectedcanteen:itemValue})
-        fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
+        fetch('http://251n6v6717.wicp.vip/app-contact/listmeal.php',{ 
           method: 'post', 
           headers: { 
             "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -106,7 +106,7 @@ export class changeScreen extends Component{
               console.log('dbname='+this.state.universityname.toString()+'&dbtable='
               +this.state.selectedcanteen.toString()+'&name='+this.state.name.toString()
               +'&price='+this.state.price+'&feature='+this.state.onchagmealfeature.toString())
-              fetch('http://qt8kjn.natappfree.cc/app-contact/addmeal.php',{ 
+              fetch('http://251n6v6717.wicp.vip/app-contact/addmeal.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -180,7 +180,7 @@ export class changeScreen extends Component{
               console.log('dbname='+this.state.universityname.toString()+'&dbtable='
               +this.state.onaddcanteen.toString()+'&name='+this.state.name.toString()
               +'&price='+this.state.price+'&feature='+this.state.onchagmealfeature.toString())
-              fetch('http://qt8kjn.natappfree.cc/app-contact/addmeal.php',{ 
+              fetch('http://251n6v6717.wicp.vip/app-contact/addmeal.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -215,7 +215,7 @@ export class changeScreen extends Component{
         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
         <Button title="submit" buttonStyle={{marginBottom:10}} onPress={()=>{
              console.log(this.state.universityname+this.state.onchangecanteen)
-              fetch('http://qt8kjn.natappfree.cc/app-contact/newtable.php',{ 
+              fetch('http://251n6v6717.wicp.vip/app-contact/newtable.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
