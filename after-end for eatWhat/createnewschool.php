@@ -51,7 +51,7 @@ $sql = "CREATE TABLE $dbnameid(
 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
 dbname VARCHAR(30) NOT NULL,
 dbtable VARCHAR(30) NOT NULL,
-name VARCHAR(30) NOT NULL,
+name VARCHAR(30) NOT NULL unique,
 price Double NOT NULL,
 feature VARCHAR(50)
 )";
