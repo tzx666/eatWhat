@@ -24,7 +24,7 @@ export class changemealsScreen extends Component{
   style={{ height: 50, width: 360 }}
   onValueChange={(itemValue, itemIndex) => {
      this.setState({selecteduniversity:itemValue})
-      fetch('http://192.168.43.40/app-contact/showdatabase.php',{ 
+      fetch('http://qt8kjn.natappfree.cc/app-contact/showdatabase.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -56,7 +56,7 @@ export class changemealsScreen extends Component{
   onValueChange={(itemValue, itemIndex) => {
     console.log(this.state.selecteduniversity+' '+itemValue)
     this.setState({selectedcanteen:itemValue})
-    fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+    fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -121,7 +121,7 @@ export class changemealsScreen extends Component{
               console.log('dbname='+this.state.selecteduniversity.toString()+'&dbtable='
               +this.state.selectedcanteen.toString()+'&name='+this.state.onchangmeal.toString()
               +'&price='+this.state.onchagmealprice+'&feature='+this.state.onchagmealfeature.toString())
-              fetch('http://192.168.43.40/app-contact/willaddmeal.php',{ 
+              fetch('http://qt8kjn.natappfree.cc/app-contact/willaddmeal.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Platform, StyleSheet, Text, View,Button,Dimensions,ScrollView,FlatList,TouchableHighlight,Picker} from 'react-native'
+import {Platform, StyleSheet, Text, View,Button,Dimensions,ScrollView,FlatList,TouchableHighlight,Picker,Alert} from 'react-native'
 import{getdatebaseurl,showdatabaseurl,listmealurl}from'../data/urls'
 import {ListItem, Icon,Overlay}from 'react-native-elements'
 import {unitWidth, width, height, unitHeight}from'../Pages/Adapt'
@@ -130,11 +130,16 @@ justifyContent:'center',}}>
           <Text >{item.num}</Text>
           </View>
           <TouchableHighlight style={style.button1}onPress={
-               ()=>{
-           this.state.meals[item.id].num--;console.log(this.state.meals[item.id])
+               ()=>{if(this.state.meals[item.id].num==0){
+                 Alert.alert("选择数量不能为负!")
+               }
+               else{
+                  this.state.meals[item.id].num--;console.log(this.state.meals[item.id])
            this.state.total=this.state.total-item.price
             console.log(this.state.total)
-            this.setState({meals:this.state.meals,total:this.state.total})}}>
+            this.setState({meals:this.state.meals,total:this.state.total
+               }
+          )}}}>
         <Icon name="remove" />
         </TouchableHighlight>
         </View>
@@ -190,7 +195,7 @@ justifyContent:'center',}}>
             </View>
             <View style={style.bottomborder}></View>
             <View style={{flexDirection:'row',height:1000*unitWidth}}>
-             <View style={{width:100*unitWidth,marginBottom:100,justifyContent:'flex-end'}}>
+             <View style={{width:100*unitWidth,marginBottom:18,justifyContent:'flex-end',backgroundColor:'white'}}>
                 <View style={style.circle}>
                 <TouchableHighlight onPress={this.intent}>
                 <Icon name="shopping-cart" />

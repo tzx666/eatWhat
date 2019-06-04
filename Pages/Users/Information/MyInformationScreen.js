@@ -11,11 +11,11 @@ export class MyInformationScreen extends Component{
          };
          navigating=()=>this.props.navigation.navigate('requestpre')
          preforscore=()=>{ 
-          fetch('http://192.168.43.40/app-contact/getdatebase.php')
+          fetch('http://qt8kjn.natappfree.cc/app-contact/getdatebase.php')
       .then(res=>res.json()) 
       .then(data=> {  
         datas=data
-        fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+        fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
 method: 'post', 
 headers: { 
 "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -37,12 +37,12 @@ console.log('Request failed', error);
       });                   
     }
     preforchangemeal=()=>
-    {   fetch('http://192.168.43.40/app-contact/getdatebase.php')
+    {   fetch('http://qt8kjn.natappfree.cc/app-contact/getdatebase.php')
     .then(res=>res.json()) 
     .then(data=> { 
       console.log(data);   
       datas=data
-      fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+      fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
         method: 'post', 
         headers: { 
           "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -64,7 +64,8 @@ console.log('Request failed', error);
     }); 
        }
        preforcanteen=()=>{
-        fetch('http://192.168.43.40/app-contact/showdatabase.php',{ 
+         console.log(userinfo.universityid)
+        fetch('http://qt8kjn.natappfree.cc/app-contact/showdatabase.php',{ 
             method: 'post', 
             headers: { 
               "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -74,10 +75,14 @@ console.log('Request failed', error);
           .then(res=>res.json()) 
           .then(data=> {   
             superdatas=[]
-            for(let i=1;i<=data[0];i++){
+            if(data==0){
+              superdatamealss=[{name:'当前暂无菜品，请先添加'}]
+              this.props.navigation.navigate('deal1')
+            }else{
+              for(let i=1;i<=data[0];i++){
               superdatas.push(data[i])
             }
-            fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+             fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
                 method: 'post', 
                 headers: { 
                   "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -97,6 +102,7 @@ console.log('Request failed', error);
                 console.log('Request failed', error); 
               }); 
             console.log(superdatas)
+            }
           }) 
           .catch(function (error) { 
             console.log('Request failed', error); 

@@ -50,6 +50,7 @@ export class UserScreen extends Component{
             userinfo['name']=ret.name
             userinfo['password']=ret.password
             userinfo['permission']=ret.permission
+            userinfo['universityid']=ret.universityid
             this.setState({name:ret.name,password:ret.password,permission:ret.permission})
         }).catch(err => {
             //如果没有找到数据且没有sync方法，
@@ -193,7 +194,8 @@ export class UserScreen extends Component{
                   data: {
                       name:this.state.name,
                       password:this.state.password,
-                      permission:this.state.permission
+                      permission:this.state.permission,
+                      universityid:userinfo['universityid']
                   },
                   //expires为有效时间
                   expires: 1000 * 3600
@@ -221,6 +223,7 @@ export class UserScreen extends Component{
           } 
           }
         Rback=()=>this.setState({isVisible:false,isapplication:false})
+        
         render(){
             return(
                 <View style={style.container}>                         
@@ -246,7 +249,11 @@ export class UserScreen extends Component{
                 leftIcon={{name:'settings'}}
                 rightIcon={{name:'chevron-right'}}
                 bottomDivider='true'
-                onPress={() => this.props.navigation.navigate('Setting')}/>
+                onPress={() => this.props.navigation.navigate('Setting', {
+                  refresh: function () {
+                   this.setState({name:'',password:'',email:'',permission:-1})
+                  }}
+                  )}/>
                 <ListItem style={style.list}
                 title='关于我们'
                 leftIcon={{name:'menu'}}

@@ -99,6 +99,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 
     defaultConfig {
@@ -107,6 +109,14 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+    }
+    signingConfigs {
+        release {
+            storeFile file("D:/eatWhat/android/app/my-release-key.keystore")
+            storePassword "123456"
+            keyAlias "my-key-alias"
+            keyPassword "123456"
+        }
     }
     splits {
         abi {
@@ -119,6 +129,7 @@ android {
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
+             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -135,6 +146,8 @@ android {
             }
         }
     }
+    lintOptions {
+    }
 }
 
 dependencies {
@@ -143,6 +156,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
+     //implementation 'org.codehaus.groovy:groovy-all:2.4.12'
+     compile 'com.facebook.react:react-native:+'
 }
 
 // Run this once to be able to run the application with BUCK

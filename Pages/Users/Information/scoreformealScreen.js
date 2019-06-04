@@ -1,4 +1,3 @@
-//存在问题：评分系统无法实时渲染
 import React, {Component} from 'react'
 import {Platform, StyleSheet, Text, View,Picker,TextInput,Alert} from 'react-native'
 import {datas}from './MyInformationScreen'
@@ -34,7 +33,7 @@ export class scoreformealScreen extends Component{
      this.setState({selecteduniversity:itemValue})
     console.log(itemValue)
    
-      fetch('http://192.168.43.40/app-contact/showdatabase.php',{ 
+      fetch('http://qt8kjn.natappfree.cc/app-contact/showdatabase.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -66,7 +65,7 @@ export class scoreformealScreen extends Component{
   onValueChange={(itemValue, itemIndex) => {
     console.log(this.state.selecteduniversity+' '+itemValue)
     this.setState({selectedcanteen:itemValue})
-    fetch('http://192.168.43.40/app-contact/listmeal.php',{ 
+    fetch('http://qt8kjn.natappfree.cc/app-contact/listmeal.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -134,7 +133,7 @@ export class scoreformealScreen extends Component{
                     console.log(this.state.onseocremealid+" "+this.state.score+" "+this.state.userscore+" "+this.state.scorepeople)
                     this.state.score=(parseFloat(this.state.score)*(parseInt(this.state.scorepeople)-1)+parseFloat(this.state.userscore))/parseInt(this.state.scorepeople)
                     console.log(this.state.selecteduniversity+this.state.selectedcanteen+this.state.onseocremeal+this.state.score+this.state.scorepeople)
-                    fetch('http://192.168.43.40/app-contact/changescore.php',{ 
+                    fetch('http://qt8kjn.natappfree.cc/app-contact/changescore.php',{ 
       method: 'post', 
       headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 

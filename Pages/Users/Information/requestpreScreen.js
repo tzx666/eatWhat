@@ -46,7 +46,7 @@ export class requestpreScreen extends Component{
               }
             }
             if(this.state.isadd==0){
-                fetch('http://192.168.43.40/app-contact/createnewschool.php',{ 
+                fetch('http://qt8kjn.natappfree.cc/app-contact/createnewschool.php',{ 
           method: 'post', 
             headers: { 
         "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
@@ -57,7 +57,7 @@ export class requestpreScreen extends Component{
 .then(data=> {   
  console.log(data)
 if(data==1){
-    fetch('http://192.168.43.40/app-contact/addsuperad.php',{ 
+    fetch('http://qt8kjn.natappfree.cc/app-contact/addsuperad.php',{ 
 method: 'post', 
 headers: { 
 "Content-type": "application/x-www-form-urlencoded;charset=utf8'" 
